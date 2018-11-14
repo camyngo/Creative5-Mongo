@@ -2,11 +2,11 @@
 $(document).ready(function() {
     // post a comment when button is on click
     $("#postComment").click(function() {
-        var myobj = { Name: $("#name").val(), Comment: $("#comment").val() };
+        var myobj = {URL: $("#picture").val(), Name: $("#name").val(), Comment: $("#comment").val() };
         // make the whole object into a string
         jobj = JSON.stringify(myobj);
         //print out the string
-        $("#json").text(jobj);
+        //$("#json").text(jobj);
         var url = "comment";
         $.ajax({
             url: url,
@@ -31,9 +31,9 @@ $(document).ready(function() {
             var everything = "<ul>";
             for (var comment in data) {
                 com = data[comment];
-                everything += "<li> Name: " + com.Name + " - Comment: " + com.Comment + "</li>";
+                everything += "<li> <div class='w3-display-container'> <div class='w3-display-topleft w3-container'> " + com.Name + ": " + com.Comment + "</div> <img src='"+com.URL + "' width='300' height='300' class='w3-circle'>"  + "</li>";
             }
-            everything += "</ul>";
+            everything += "</div> </ul>";
             $("#comments").html(everything);
         })
     })

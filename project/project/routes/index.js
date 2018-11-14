@@ -7,6 +7,7 @@ var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
 mongoose.connect('mongodb://localhost/commentDB', { useNewUrlParser: true }); //Connects to a mongo database called "commentDB"
 
 var commentSchema = mongoose.Schema({ //Defines the Schema for this database
+    URL: String,
     Name: String,
     Comment: String
 });
