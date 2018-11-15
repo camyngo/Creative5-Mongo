@@ -19,7 +19,6 @@ $(document).ready(function() {
         })
     });
     
-
     $("#getComments").click(function() {
         var URL = "comment?q=";
         if ($("#query").val()){

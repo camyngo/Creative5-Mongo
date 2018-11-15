@@ -28,27 +28,29 @@
                 <button id="next">Next Question</button>
                 <button id="submit">Submit Quiz</button>
                 <div id="results"></div>
-                <a href="http://18.219.88.251:3001/"><button class="btn-sm">Restart</button></a>
-                <button id="check" class="btn-sm">Check Answer</button>
+                <a href="http://18.219.88.251:3006/"><button class="btn btn-outline-info btn-sm">Restart</button></a>
+                <button id="check" class="btn btn-outline-primary btn-sm">Check Answer</button>
                 <div id="quiz2"></div>
             </center>
+            <div class="like-content">
+                <span>Did you like these quizzes? Press like to show your love</span>
+                <button class="btn-secondary like-review"><i class="fa fa-heart" aria-hidden="true"></i> Like</button>
+            </div>
         </div>
     </div>
-
-
     <center>
         <form id="commentForm" action="">
-            <label for="picture">&nbsp &nbsp &nbsp Please input your picture&nbsp</label>
-            <label for="name">Please input your name &nbsp </label>
-            <label for="comment">Please input your comment &nbsp &nbsp</label><br>
+            <label for="picture">&nbsp &nbsp Please input your picture&nbsp</label>
+            <label for="name">&nbsp &nbsp Please input your name &nbsp </label>
+            <label for="comment">&nbsp &nbsp Please input your comment &nbsp &nbsp</label><br>
             <input type="text" id="picture" placeholder="Picture link">
             <input type="text" id="name" placeholder="Name">
             <input type="text" id="comment" placeholder="Comment"><br>
         </form>
     </center>
 
-    <button id="postComment" class="btn btn-info btn-sm">Post Comment</button>
-    <button id="getComments" class="btn btn-warning btn-sm">Get Comments</button>
+    <button id="postComment" class="btn btn-outline-warning">Post A Comment</button>
+    <button id="getComments" class="btn btn-outline-success">Chat History</button>
     <br>
     <label> Comment</label>
     <div id="json"></div>
@@ -120,12 +122,10 @@
             function buildQuiz() {
                 // we'll need a place to store the HTML output
                 const output = [];
-
                 // for each question...
                 myQuestions.forEach((currentQuestion, questionNumber) => {
                     // we'll want to store the list of answer choices
                     const answers = [];
-
                     // and for each available answer...
                     for (letter in currentQuestion.answers) {
                         // ...add an HTML radio button
@@ -165,7 +165,6 @@
                     const answerContainer = answerContainers[questionNumber];
                     const selector = `input[name=question${questionNumber}]:checked`;
                     const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
                     // if answer is correct
                     if (userAnswer === currentQuestion.correctAnswer) {
                         // add to the number of correct answers
@@ -190,6 +189,7 @@
                 slides[currentSlide].classList.remove("active-slide");
                 slides[n].classList.add("active-slide");
                 currentSlide = n;
+
 
                 if (currentSlide === 0) {
                     previousButton.style.display = "none";
@@ -237,7 +237,7 @@
             submitButton.addEventListener("click", showResults);
             previousButton.addEventListener("click", showPreviousSlide);
             nextButton.addEventListener("click", showNextSlide);
-
+            var divClone = $("#quiz2").clone(); // Do this on $(document).ready(function() { ... })
 
             function showanswer() {
                 var Results;
@@ -245,10 +245,16 @@
                 Results = myQuestions[currentSlide].correctAnswer;
                 console.log(Results);
                 // show the correct answers
-                document.getElementById("quiz2").innerHTML = Results;
-            }
-            checkButton.addEventListener("click", showanswer)
+                //document.getElementById("quiz2").innerHTML = Results;
+                $("#quiz2").html(Results); // Change the content temporarily
 
+            }
+            checkButton.addEventListener("click", showanswer);
+
+            $(document).one('click', '.like-review', function(e) {
+                $(this).html('<i class="fa fa-heart" aria-hidden="true"></i> You liked this');
+                $(this).children('.fa-heart').addClass('animate-like');
+            })
         });
     </script>
 </body>
